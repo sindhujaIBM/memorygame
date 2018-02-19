@@ -1,0 +1,12 @@
+<div style="width:50%;float:left;">
+    <div *ngFor="let imsrc of imgSourceLeft;let i=index" >
+      <img src="./assets/animals/back.png" (mousedown)="leftImageClick($event)">
+      <span style="display:none;">{{imsrc}}</span>
+    </div>
+</div>
+<div style="width:50%;float:left;">
+    <div *ngFor="let imsrc of imgSourceRight;let i=index" >
+      <img src="./assets/animals/back.png" (mousedown)="rightImageClick($event)">
+      <span style="display:none;">{{imsrc}}</span>
+    </div>
+</div>
