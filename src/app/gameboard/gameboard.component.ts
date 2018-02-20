@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Window } from 'selenium-webdriver';
 import { Location } from '@angular/common';
+import { ViewChild, ViewChildren, AfterViewInit, TemplateRef, ViewContainerRef, QueryList , ElementRef } from '@angular/core';
+import { LeftDivDirective } from '../left-div.directive';
+import { RightDivDirective } from '../right-div.directive';
 
 
 @Component({
@@ -10,7 +13,7 @@ import { Location } from '@angular/common';
 })
 export class GameboardComponent implements OnInit {
 
-  level: number = 6;
+  level: number = 5;
   imgSourceLeft: Array<number> =[];
   imgSourceRight: Array<number> =[];
   
@@ -19,8 +22,27 @@ export class GameboardComponent implements OnInit {
 
   successCount:number = 0;
   constructor() { }
+  //@ViewChild("leftGameDiv", {read: ElementRef}) leftGameDiv: ElementRef;
+  //@ViewChild("rightGameDiv", {read: ElementRef}) rightGameDiv: ElementRef;
+
+  @ViewChild('leftTemp')
+  private leftTempRef : TemplateRef<any>
+
+  @ViewChild('rightTemp')
+  private rightTempRef : TemplateRef<any>
+
+  @ViewChildren(LeftDivDirective)
+  private leftList: QueryList<LeftDivDirective>
+
+  @ViewChildren(RightDivDirective)
+  private rightList: QueryList<RightDivDirective>
+
 
   ngOnInit() {
+    this.constructLeftAndRightArray();    
+  }
+  constructLeftAndRightArray(){
+    
     for(var i=1;i <= this.level;i++){
       this.imgSourceLeft.push(i);
     }
@@ -30,6 +52,28 @@ export class GameboardComponent implements OnInit {
       this.imgSourceRight.push(i);
     }
     this.shuffle(this.imgSourceRight);
+  }
+  ngAfterViewInit(){
+    //this.createNextLevel();
+    //console.log(this.leftGameDiv.nativeElement);
+    this.createUI();
+    
+  }
+  createUI(){
+    this.leftList.map(leftDivDirective =>
+      leftDivDirective.viewContainerRef.createEmbeddedView(this.leftTempRef));
+    this.rightList.map(rightDivDirective =>
+      rightDivDirective.viewContainerRef.createEmbeddedView(this.rightTempRef));
+  }
+  createNextLevel(){
+    this.rightList.destroy();
+    /*for(var i=0;i<this.leftGameDiv.nativeElement.childElementCount;i++){
+      this.leftGameDiv.nativeElement.removeChild(this.leftGameDiv.nativeElement.children[i]);
+    }
+    for(var i=0;i<this.rightGameDiv.nativeElement.childElementCount;i++){
+      this.rightGameDiv.nativeElement.removeChild(this.rightGameDiv.nativeElement.children[i]);
+    }*/
+
   }
   leftImageClick(e){
     if(this.leftImageIndex == -1){
@@ -44,10 +88,12 @@ export class GameboardComponent implements OnInit {
           openElements[i].className = "done";        
         }
         e.target.className = "done";
+        var compRef = this;
         if(this.successCount == this.level){
           setTimeout(function(){
             alert("you won");
-            this.level++;
+            compRef.level++;
+            compRef.createNextLevel();
           },1000);
         }
         this.leftImageIndex = -1;
@@ -60,7 +106,7 @@ export class GameboardComponent implements OnInit {
         }
         setTimeout(function(){
           e.target.setAttribute("src","./assets/animals/back.png");
-          e.targe.className="";
+          e.target.className="";
         },1000);
         
         this.rightImageIndex = -1;
@@ -75,7 +121,6 @@ export class GameboardComponent implements OnInit {
       var previousRandomNum = e.target.parentElement.lastElementChild.innerHTML;
       e.target.src = "./assets/animals/"+previousRandomNum+".png";
       this.rightImageIndex = previousRandomNum;
-    
       if(this.leftImageIndex != -1 && this.leftImageIndex == this.rightImageIndex ){
         this.successCount++;
         var openElements = document.getElementsByClassName("open");
@@ -87,6 +132,7 @@ export class GameboardComponent implements OnInit {
           setTimeout(function(){
             alert("you won");
             this.level++;
+            this.createNextLevel();
           },1000);
         }
         this.leftImageIndex = -1;
