@@ -1,1 +1,15 @@
+.base{
+    display: flex;
+    justify-content: center;
+}
 
+img {
+    max-width: 190px;
+    min-height: 266px;
+}
+
+@media only screen and (max-width: 768px) {
+    .base {
+        flex-direction: column;
+    }
+}

@@ -1,26 +1,26 @@
 <ng-template #leftTemp>
-  <div style="width:50%;float:left;">
-  <div *ngFor="let imsrc of imgSourceLeft;let i=index" >
-    <img src="./assets/animals/back.png" (mousedown)="leftImageClick($event)">
-    <span style="display:none;">{{imsrc}}</span>
-  </div>
+  <div class="base">
+    <div *ngFor="let imsrc of imgSourceLeft;let i=index">
+      <img src="./assets/animals/back.png" (mousedown)="leftImageClick($event)">
+      <span style="display:none;">{{imsrc}}</span>
+    </div>
   </div>
 </ng-template>
 
 
 <ng-template #rightTemp>
-  <div style="width:50%;float:left;">
-  <div *ngFor="let imsrc of imgSourceRight;let i=index" >
-    <img src="./assets/animals/back.png" (mousedown)="rightImageClick($event)">
-    <span style="display:none;">{{imsrc}}</span>
-  </div>
+  <div class="base">
+    <div *ngFor="let imsrc of imgSourceRight;let i=index">
+      <img src="./assets/animals/back.png" (mousedown)="rightImageClick($event)">
+      <span style="display:none;">{{imsrc}}</span>
+    </div>
   </div>
 </ng-template>
 
 
 <div appLeftDiv #leftGameDiv>
-  
+
 </div>
 <div appRightDiv #rightGameDiv>
-  
+
 </div>
