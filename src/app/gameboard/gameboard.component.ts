@@ -25,10 +25,10 @@ export class GameboardComponent implements OnInit {
   //@ViewChild("leftGameDiv", {read: ElementRef}) leftGameDiv: ElementRef;
   //@ViewChild("rightGameDiv", {read: ElementRef}) rightGameDiv: ElementRef;
 
-  @ViewChild('leftTemp')
+  @ViewChild('leftTemp', { static: true })
   private leftTempRef : TemplateRef<any>
 
-  @ViewChild('rightTemp')
+  @ViewChild('rightTemp', { static: true })
   private rightTempRef : TemplateRef<any>
 
   @ViewChildren(LeftDivDirective)
