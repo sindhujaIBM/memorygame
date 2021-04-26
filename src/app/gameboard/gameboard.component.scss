@@ -1,6 +1,14 @@
 .base{
     display: flex;
     justify-content: center;
+    padding: 20px;
+    &.left {
+        border: 2px solid blue;
+        margin-bottom: 20px;
+    }
+    &.right {
+        border: 2px solid green;
+    }
 }
 
 img {

@@ -1,5 +1,5 @@
 <ng-template #leftTemp>
-  <div class="base">
+  <div class="base left">
     <div *ngFor="let imsrc of imgSourceLeft;let i=index">
       <img src="./assets/animals/back.png" (mousedown)="leftImageClick($event)">
       <span style="display:none;">{{imsrc}}</span>
@@ -9,7 +9,7 @@
 
 
 <ng-template #rightTemp>
-  <div class="base">
+  <div class="base right">
     <div *ngFor="let imsrc of imgSourceRight;let i=index">
       <img src="./assets/animals/back.png" (mousedown)="rightImageClick($event)">
       <span style="display:none;">{{imsrc}}</span>
